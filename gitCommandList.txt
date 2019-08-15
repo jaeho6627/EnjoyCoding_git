@@ -1,0 +1,12 @@
+PULL (파일을 가져오는 것)
+-  git pull origin master
+
+PUSH (git으로 파일을 보내는 것)
+-  git status
+-  git add
+-  git commit -m "massage"
+-  git push origin +master
+
+
+작성자 정재호
+이메일 00gundam1207@gmail.com
