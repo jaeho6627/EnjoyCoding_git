@@ -1,14 +1,14 @@
 /*##################################
-´ÜÀÏ¿¬°á¸®½ºÆ®(¼ö¾÷¿ë)
-ÆÄÀÏ¸í: LinkedList_empty.cpp
-ÀÛ¼ºÀÚ: ±èÈ«±Ô (downkhg@gmail.com)
-¸¶Áö¸·¼öÁ¤³¯Â¥: 2019.04.12
-¹öÀü: 1.10
+ë‹¨ì¼ì—°ê²°ë¦¬ìŠ¤íŠ¸
+íŒŒì¼ëª…: LinkedList_ver1.1.cpp
+ìž‘ì„±ìž: ì •ìž¬í˜¸
+ë§ˆì§€ë§‰ìˆ˜ì •ë‚ ì§œ: 2019.08.13
+ë²„ì „: 1.10
 ###################################*/
 
 #include <stdio.h>
-#include <stdlib.h> //¸Þ¸ð¸® µ¿ÀûÇÒ´ç Çì´õ
-#include <crtdbg.h> //¸Þ¸ð¸® ´©¼ö Å½Áö Çì´õ
+#include <stdlib.h> //ë©”ëª¨ë¦¬ ë™ì í• ë‹¹ í—¤ë”
+#include <crtdbg.h> //ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ íƒì§€ í—¤ë”
 //#include  "linkedlistClass.h"
 
 struct SNode {
@@ -16,32 +16,32 @@ struct SNode {
 	SNode* pNext;
 };
 
-SNode* CreateNode(SNode* pNode, int data); //³ëµå¸¦ »ý¼ºÇÏ¿© ¸®ÅÏÇÑ´Ù.
-SNode* FindNodeData(SNode* pStart, int data); //ÇØ´ç µ¥ÀÌÅÍ¸¦ °¡Áø ³ëµå¸¦ Ã£´Â´Ù.
-void InsertNodeData(SNode* pStart, int data, int insert); //ÇØ´ç µ¥ÀÌÅÍ¸¦ °¡Áø ³ëµå µÚ¿¡ ³ëµå¸¦ Ãß°¡ÇÑ´Ù.
-SNode* DeleteNodeData(SNode* pStart, int del); //ÇØ´çµ¥ÀÌÅÍ¸¦ °¡Áø ³ëµå¸¦ »èÁ¦ÇÑ´Ù.
-void PrintLinkedList(SNode* pStart); //³ëµå¸¦ ¼øÈ¸ÇÏ¸ç ³¡³¯¶§±îÁö Ãâ·ÂÇÑ´Ù.
-void DeleteLinkedList(SNode*& pStart); //³ëµå¸¦ ¼øÈ¸ÇÏ¸ç ¸ðµçµ¥ÀÌÅÍ¸¦ »èÁ¦ÇÑ´Ù.
+SNode* CreateNode(SNode* pNode, int data); //ë…¸ë“œë¥¼ ìƒì„±í•˜ì—¬ ë¦¬í„´í•œë‹¤.
+SNode* FindNodeData(SNode* pStart, int data); //í•´ë‹¹ ë°ì´í„°ë¥¼ ê°€ì§„ ë…¸ë“œë¥¼ ì°¾ëŠ”ë‹¤.
+void InsertNodeData(SNode* pStart, int data, int insert); //í•´ë‹¹ ë°ì´í„°ë¥¼ ê°€ì§„ ë…¸ë“œ ë’¤ì— ë…¸ë“œë¥¼ ì¶”ê°€í•œë‹¤.
+SNode* DeleteNodeData(SNode* pStart, int del); //í•´ë‹¹ë°ì´í„°ë¥¼ ê°€ì§„ ë…¸ë“œë¥¼ ì‚­ì œí•œë‹¤.
+void PrintLinkedList(SNode* pStart); //ë…¸ë“œë¥¼ ìˆœíšŒí•˜ë©° ëë‚ ë•Œê¹Œì§€ ì¶œë ¥í•œë‹¤.
+void DeleteLinkedList(SNode*& pStart); //ë…¸ë“œë¥¼ ìˆœíšŒí•˜ë©° ëª¨ë“ ë°ì´í„°ë¥¼ ì‚­ì œí•œë‹¤.
 //void ReverseLinkedList(SNode* pStart); //
 
-									   //¿¬°á¸®½ºÆ® µ¿ÀûÀ¸·Î ÀÔ·Â¹Þ±â.(µ¿ÀûÇÒ´ç ¼³¸í¿ë)
+									   //ì—°ê²°ë¦¬ìŠ¤íŠ¸ ë™ì ìœ¼ë¡œ ìž…ë ¥ë°›ê¸°.(ë™ì í• ë‹¹ ì„¤ëª…ìš©)
 void InputAdd();
 
-//Á¤»óÀÛµ¿ Å×½ºÆ®¸¦ À§ÇØ¼­, ´ÙÀ½°ú °°ÀÌ ±âº»ÀûÀÎ ÀýÂ÷·Î ¿À·ù¸¦ È®ÀÎÇÑ´Ù.
-//ÀÌ ¼Ò½º¿¡ ¸î°¡Áö ¹ö±×°¡ Á¸ÀçÇÑ´Ù.
-//ÀÌ ÄÚµå°¡ Á¤»óÀÛµ¿ µÈ ÈÄ ¹ß°ßÇØº¼°Í!
-//main()ÇÔ¼ö ³» ÄÚµå´Â Ãß°¡´Â °¡´ÉÇÏÁö¸¸ »èÁ¦´Â ÇÏÁö¸»°Í!
+//ì •ìƒìž‘ë™ í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´ì„œ, ë‹¤ìŒê³¼ ê°™ì´ ê¸°ë³¸ì ì¸ ì ˆì°¨ë¡œ ì˜¤ë¥˜ë¥¼ í™•ì¸í•œë‹¤.
+//ì´ ì†ŒìŠ¤ì— ëª‡ê°€ì§€ ë²„ê·¸ê°€ ì¡´ìž¬í•œë‹¤.
+//ì´ ì½”ë“œê°€ ì •ìƒìž‘ë™ ëœ í›„ ë°œê²¬í•´ë³¼ê²ƒ!
+//main()í•¨ìˆ˜ ë‚´ ì½”ë“œëŠ” ì¶”ê°€ëŠ” ê°€ëŠ¥í•˜ì§€ë§Œ ì‚­ì œëŠ” í•˜ì§€ë§ê²ƒ!
 int main()
 {
-	//_CrtSetBreakAlloc(71); //¸Þ¸ð¸® ´©¼ö½Ã ¹øÈ£¸¦ ³ÖÀ¸¸é ÇÒ´çÇÏ´Â À§Ä¡¿¡ ºê·¹ÀÌÅ© Æ÷ÀÎÆ®¸¦ °Ç´Ù.
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //¸Þ¸ð¸® ´©¼ö °Ë»ç 
+	//_CrtSetBreakAlloc(71); //ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ì‹œ ë²ˆí˜¸ë¥¼ ë„£ìœ¼ë©´ í• ë‹¹í•˜ëŠ” ìœ„ì¹˜ì— ë¸Œë ˆì´í¬ í¬ì¸íŠ¸ë¥¼ ê±´ë‹¤.
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ ê²€ì‚¬ 
 
 	SNode* pBegin = NULL;
 	SNode* pEnd = NULL;
 
-	//³ëµå Ãß°¡ Å×½ºÆ®
+	//ë…¸ë“œ ì¶”ê°€ í…ŒìŠ¤íŠ¸
 	pEnd = CreateNode(pEnd, 10);
-	pBegin = pEnd; //¸¶Áö¸· ³ëµå¸¦ ¾Ë¾Æ¾ß °Ë»öÀÌ °¡´ÉÇÏ¹Ç·Î ÀúÀåÇØµÐ´Ù.
+	pBegin = pEnd; //ë§ˆì§€ë§‰ ë…¸ë“œë¥¼ ì•Œì•„ì•¼ ê²€ìƒ‰ì´ ê°€ëŠ¥í•˜ë¯€ë¡œ ì €ìž¥í•´ë‘”ë‹¤.
 
 	pEnd = CreateNode(pEnd, 20);
 	pEnd = CreateNode(pEnd, 30);
@@ -54,20 +54,20 @@ int main()
 	if (pFind != NULL)
 		printf("Find:%d\n", pFind->nData);
 
-	InsertNodeData(pBegin, 30, 60);//³ëµå »ðÀÔ
+	InsertNodeData(pBegin, 30, 60);//ë…¸ë“œ ì‚½ìž…
 
 	PrintLinkedList(pBegin);
 
-	pBegin = DeleteNodeData(pBegin, 60);//³ëµå »èÁ¦
+	pBegin = DeleteNodeData(pBegin, 60);//ë…¸ë“œ ì‚­ì œ
 
 	PrintLinkedList(pBegin);
 
-	DeleteLinkedList(pBegin); //¸ðµç³ëµå»èÁ¦ - ÀÌ ÇÔ¼ö¸¦ È£ÃâÇÏÁö¾ÊÀ»½Ã ¸Þ¸ð¸®°¡ ´©¼öµÊ.
-	PrintLinkedList(pBegin); //¸ðµç ¸®½ºÆ®¸¦ ÇÒ´ç ÇØÁ¦ÇßÁö¸¸ beginÀÌ °¡¸®Å°´Â ¸Þ¸ð¸® ÁÖ¼Ò´Â ±×´ë·Î ¶ó¼­ Ãâ·Â½Ã ¾²·¹±â °ªÀ» Ãâ·ÂÇÔ And errer
+	DeleteLinkedList(pBegin); //ëª¨ë“ ë…¸ë“œì‚­ì œ - ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì§€ì•Šì„ì‹œ ë©”ëª¨ë¦¬ê°€ ëˆ„ìˆ˜ë¨.
+	PrintLinkedList(pBegin); //ëª¨ë“  ë¦¬ìŠ¤íŠ¸ë¥¼ í• ë‹¹ í•´ì œí–ˆì§€ë§Œ beginì´ ê°€ë¦¬í‚¤ëŠ” ë©”ëª¨ë¦¬ ì£¼ì†ŒëŠ” ê·¸ëŒ€ë¡œ ë¼ì„œ ì¶œë ¥ì‹œ ì“°ë ˆê¸° ê°’ì„ ì¶œë ¥í•¨ And errer
 }
 
-//¿©±â¼­ ºÎÅÍ ±â´ÉÀ» ±¸ÇöÇÑ´Ù.
-//±âÁ¸ÄÚµå´Â ¼Õ´ëÁö¸»°í, Ãß°¡¸¸ ÇÏ¿© Çö ÇÁ·Î±×·¥ Á¤»ó ÀÛµ¿ÇÏµµ·ÏÇÒ°Í.
+//ì—¬ê¸°ì„œ ë¶€í„° ê¸°ëŠ¥ì„ êµ¬í˜„í•œë‹¤.
+//ê¸°ì¡´ì½”ë“œëŠ” ì†ëŒ€ì§€ë§ê³ , ì¶”ê°€ë§Œ í•˜ì—¬ í˜„ í”„ë¡œê·¸ëž¨ ì •ìƒ ìž‘ë™í•˜ë„ë¡í• ê²ƒ.
 SNode* CreateNode(SNode* pNode, int data)
 {
 	SNode* pTemp = NULL;
@@ -78,7 +78,7 @@ SNode* CreateNode(SNode* pNode, int data)
 	return pTemp;
 }
 
-SNode* FindNodeData(SNode* pStart, int data) //Ã£´Â ³ëµå°¡ ¾ø´Â °æ¿ì
+SNode* FindNodeData(SNode* pStart, int data) //ì°¾ëŠ” ë…¸ë“œê°€ ì—†ëŠ” ê²½ìš°
 {
 	while (pStart != NULL) {
 		if (pStart->nData == data) {
@@ -94,7 +94,7 @@ SNode* FindNodeData(SNode* pStart, int data) //Ã£´Â ³ëµå°¡ ¾ø´Â °æ¿ì
 	return pStart;
 }
 
-void InsertNodeData(SNode* pStart, int data, int insert) //Ãß°¡ÇÒ µ¥ÀÌÅÍÀÇ Ãß°¡ÇÒ À§Ä¡ÀÇ ÀÌÀü ³ëµå °ªÀ» Ã£´Âµ¥ ¾ø´Â °æ¿ì
+void InsertNodeData(SNode* pStart, int data, int insert) //ì¶”ê°€í•  ë°ì´í„°ì˜ ì¶”ê°€í•  ìœ„ì¹˜ì˜ ì´ì „ ë…¸ë“œ ê°’ì„ ì°¾ëŠ”ë° ì—†ëŠ” ê²½ìš°
 {
 	SNode* pNode = pStart;
 	SNode* pInsert = NULL;
@@ -105,7 +105,7 @@ void InsertNodeData(SNode* pStart, int data, int insert) //Ãß°¡ÇÒ µ¥ÀÌÅÍÀÇ Ãß°¡Ç
 	if (pNode == NULL) {
 		printf("%d can not find", data);
 		pNode = pStart;
-		while (pNode->pNext != NULL) { //ÀÓÀÇ·Î ¸¶Áö¸· À§Ä¡¿¡ ³ëµå Ãß°¡
+		while (pNode->pNext != NULL) { //ìž„ì˜ë¡œ ë§ˆì§€ë§‰ ìœ„ì¹˜ì— ë…¸ë“œ ì¶”ê°€
 			pNode = pNode->pNext;
 		}
 	}
@@ -115,7 +115,7 @@ void InsertNodeData(SNode* pStart, int data, int insert) //Ãß°¡ÇÒ µ¥ÀÌÅÍÀÇ Ãß°¡Ç
 	return;
 }
 
-SNode* DeleteNodeData(SNode* pStart, int del) //Áö¿ï data°¡ ¾ø´Âµ¥ Á¦°Å¸¦ ¸í·ÉÇÏ¸é
+SNode* DeleteNodeData(SNode* pStart, int del) //ì§€ìš¸ dataê°€ ì—†ëŠ”ë° ì œê±°ë¥¼ ëª…ë ¹í•˜ë©´
 {
 	SNode* pPre = NULL;
 	SNode* pNode = pStart;
@@ -129,7 +129,7 @@ SNode* DeleteNodeData(SNode* pStart, int del) //Áö¿ï data°¡ ¾ø´Âµ¥ Á¦°Å¸¦ ¸í·ÉÇÏ
 		while (pNode->nData != del) {
 			pPre = pNode;
 			pNode = pNode->pNext;
-			if (pNode == NULL) { //·çÇÁ¸¦ µ¹¾Æµµ del°ú µ¿ÀÏÇÑ data¸¦ ¸øÃ£°í pNode¿¡ ÀúÀåµÈ °ªÀÌ NULLÀÎ °æ¿ì
+			if (pNode == NULL) { //ë£¨í”„ë¥¼ ëŒì•„ë„ delê³¼ ë™ì¼í•œ dataë¥¼ ëª»ì°¾ê³  pNodeì— ì €ìž¥ëœ ê°’ì´ NULLì¸ ê²½ìš°
 				printf("can not fine %d to delete data", del);
 				return pStart;
 			}
@@ -140,12 +140,12 @@ SNode* DeleteNodeData(SNode* pStart, int del) //Áö¿ï data°¡ ¾ø´Âµ¥ Á¦°Å¸¦ ¸í·ÉÇÏ
 	return pStart;
 }
 
-void PrintLinkedList(SNode* pStart) //¸®½ºÆ®°¡ ¾ø´Âµ¥ ¸®½ºÆ®¸¦ Ãâ·ÂÇÑ´Ù¸é
+void PrintLinkedList(SNode* pStart) //ë¦¬ìŠ¤íŠ¸ê°€ ì—†ëŠ”ë° ë¦¬ìŠ¤íŠ¸ë¥¼ ì¶œë ¥í•œë‹¤ë©´
 {
 	SNode* pNode = pStart;
 	printf("data:");
 	if (pNode == NULL) {
-		//¸®½ºÆ®°¡ ¾ø´Âµ¥ È£ÃâµÊ
+		//ë¦¬ìŠ¤íŠ¸ê°€ ì—†ëŠ”ë° í˜¸ì¶œë¨
 		printf("Nothing List here");
 	}
 	while (pNode)
@@ -159,12 +159,12 @@ void PrintLinkedList(SNode* pStart) //¸®½ºÆ®°¡ ¾ø´Âµ¥ ¸®½ºÆ®¸¦ Ãâ·ÂÇÑ´Ù¸é
 	printf("\n");
 }
 
-void DeleteLinkedList(SNode*& pStart) //¸®½ºÆ®°¡ ¾øÀ» ¶§ ¸®½ºÆ®¸¦ Áö¿ì¸é 
+void DeleteLinkedList(SNode*& pStart) //ë¦¬ìŠ¤íŠ¸ê°€ ì—†ì„ ë•Œ ë¦¬ìŠ¤íŠ¸ë¥¼ ì§€ìš°ë©´ 
 {
 	SNode* pNode = pStart;
 	SNode* pDel = NULL;
 	if (pNode == NULL) {
-		//¸®½ºÆ®°¡ ¾ø´Âµ¥ È£ÃâµÊ
+		//ë¦¬ìŠ¤íŠ¸ê°€ ì—†ëŠ”ë° í˜¸ì¶œë¨
 		printf("Nothing List here\n");
 	}
 	while (pNode) {
@@ -182,12 +182,12 @@ void InputAdd()
 	SNode* pNode = NULL;
 	int nData = 0;
 
-	//µ¿ÀûÇÒ´çÀ» ÇÏ¸é ÇÁ·Î±×·¥ÀÌ »ç¿ëÀÚ¿¡ ÀÇÇØ¼­ »ç¿ëµÇ´Â ¸Þ¸ð¸®°¡ °áÁ¤µÈ´Ù.
-	//½±°Ô¸»ÇØ¼­, ÄÄÆÄÀÏ´Ü°è¿¡¼­ 100°³¸¦ ¸¸µé°í ¾´´Ù¸é, 
-	//»ç¿ëÇÏÁö¾Ê´õ¶óµµ 100°³ÀÇ ¸Þ¸ð¸®¸¦ »ç¿ëÇÒ¼ö¹Û¿¡¾ø´Ù.
-	//±×¸®°í, 100°³ ÀÌ»óÀÇ ¸Þ¸ð¸®µµ »ç¿ëÇÒ¼ö¾ø´Ù.
-	//±×·¯³ª, µ¿ÀûÇÒ´çÀ» ÇÏ¸é »ç¿ëÀÚ°¡ Ãß°¡ÇÑ ¸Þ¸ð¸®¸¸Å­¸¸ ¸Þ¸ð¸®°¡ »ç¿ëµÇ°í 
-	//¸Þ¸ð¸®¿ë·®ÀÌ Çã¿ëÇÏ´Â ÇÑ Ãß°¡°¡ µÈ´Ù.
+	//ë™ì í• ë‹¹ì„ í•˜ë©´ í”„ë¡œê·¸ëž¨ì´ ì‚¬ìš©ìžì— ì˜í•´ì„œ ì‚¬ìš©ë˜ëŠ” ë©”ëª¨ë¦¬ê°€ ê²°ì •ëœë‹¤.
+	//ì‰½ê²Œë§í•´ì„œ, ì»´íŒŒì¼ë‹¨ê³„ì—ì„œ 100ê°œë¥¼ ë§Œë“¤ê³  ì“´ë‹¤ë©´, 
+	//ì‚¬ìš©í•˜ì§€ì•Šë”ë¼ë„ 100ê°œì˜ ë©”ëª¨ë¦¬ë¥¼ ì‚¬ìš©í• ìˆ˜ë°–ì—ì—†ë‹¤.
+	//ê·¸ë¦¬ê³ , 100ê°œ ì´ìƒì˜ ë©”ëª¨ë¦¬ë„ ì‚¬ìš©í• ìˆ˜ì—†ë‹¤.
+	//ê·¸ëŸ¬ë‚˜, ë™ì í• ë‹¹ì„ í•˜ë©´ ì‚¬ìš©ìžê°€ ì¶”ê°€í•œ ë©”ëª¨ë¦¬ë§Œí¼ë§Œ ë©”ëª¨ë¦¬ê°€ ì‚¬ìš©ë˜ê³  
+	//ë©”ëª¨ë¦¬ìš©ëŸ‰ì´ í—ˆìš©í•˜ëŠ” í•œ ì¶”ê°€ê°€ ëœë‹¤.
 	while (nData != -1)
 	{
 		scanf("%d", &nData);
@@ -195,7 +195,7 @@ void InputAdd()
 
 		if (pNode == NULL)
 		{
-			printf("´õ ÀÌ»ó »ç¿ëÇÒ¼ö ÀÖ´Â ¸Þ¸ð¸®°¡ ¾ø½À´Ï´Ù!");
+			printf("ë” ì´ìƒ ì‚¬ìš©í• ìˆ˜ ìžˆëŠ” ë©”ëª¨ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤!");
 		}
 
 		if (pStart == NULL)
@@ -204,5 +204,5 @@ void InputAdd()
 		PrintLinkedList(pStart);
 	}
 
-	DeleteLinkedList(pStart); //¸ðµç³ëµå»èÁ¦ - ÀÌ ÇÔ¼ö¸¦ È£ÃâÇÏÁö¾ÊÀ»½Ã ¸Þ¸ð¸®°¡ ´©¼öµÊ.
+	DeleteLinkedList(pStart); //ëª¨ë“ ë…¸ë“œì‚­ì œ - ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì§€ì•Šì„ì‹œ ë©”ëª¨ë¦¬ê°€ ëˆ„ìˆ˜ë¨.
 }
