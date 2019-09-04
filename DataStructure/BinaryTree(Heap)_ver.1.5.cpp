@@ -1,9 +1,9 @@
 /*
-ÆÄÀÏÀÌ¸§	: BinaryTree(Stack)_ver.1.5.cpp
-ÀÛ ¼º ÀÚ	: Á¤ÀçÈ£ (jhjy5369@naver.com)
-ÄÚµå¸ñÀû	: ½ºÅÃÀ» »ç¿ëÇØ Àç±ÍÇÔ¼ö¸¦ »ç¿ëÇÏÁö ¾Ê°í Æ®¸®ÀÇ ¿ä¼Ò¸¦ ¼øÈ¸ÇÏ´Â ÇÔ¼ö Á¤ÀÇ
-¼ö Á¤ ÀÏ	: 19.9.4
-¼öÁ¤³»¿ë	: Àß¸øµÈ Èü Æ®¸® ±¸Çö -> ÃÖ¼Ò Èü Æ®¸® ±¸Çö ¿Ï·á
+íŒŒì¼ì´ë¦„	: BinaryTree(Stack)_ver.1.5.cpp
+ìž‘ ì„± ìž	: ì •ìž¬í˜¸ (jhjy5369@naver.com)
+ì½”ë“œëª©ì 	: ìŠ¤íƒì„ ì‚¬ìš©í•´ ìž¬ê·€í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì§€ ì•Šê³  íŠ¸ë¦¬ì˜ ìš”ì†Œë¥¼ ìˆœíšŒí•˜ëŠ” í•¨ìˆ˜ ì •ì˜
+ìˆ˜ ì • ì¼	: 19.9.4
+ìˆ˜ì •ë‚´ìš©	: ìž˜ëª»ëœ íž™ íŠ¸ë¦¬ êµ¬í˜„ -> ìµœì†Œ íž™ íŠ¸ë¦¬ êµ¬í˜„ ì™„ë£Œ
 */
 
 #include <stdio.h>
@@ -23,7 +23,7 @@ struct qNode {
 	qNode* pNext;
 };
 
-struct sNode {//½ºÅÃÀÇ ³ëµå ÀÚ·á±¸Á¶
+struct sNode {//ìŠ¤íƒì˜ ë…¸ë“œ ìžë£Œêµ¬ì¡°
 	bNode* nodeData;
 	sNode* pNext;
 
@@ -36,13 +36,13 @@ void addTree(qNode*& pFront, qNode*& pRear, int data);
 void retraversals(bNode* parentNode);
 void traversals(bNode* parentNode);
 
-void check_heap(bNode* pNode); //ÃÖ¼Ò Èü Æ®¸® ±¸Çö
+void check_heap(bNode* pNode); //ìµœì†Œ íž™ íŠ¸ë¦¬ êµ¬í˜„
 
-//½ºÅÃ°ü·Ã ÇÔ¼ö
+//ìŠ¤íƒê´€ë ¨ í•¨ìˆ˜
 void push(sNode*& pFront, bNode* data);
 bNode* pop(sNode*& pFront);
 
-//½ºÅÃÀ» È°¿ëÇØ ¼øÈ¸ÇÏ´Â ÇÔ¼ö
+//ìŠ¤íƒì„ í™œìš©í•´ ìˆœíšŒí•˜ëŠ” í•¨ìˆ˜
 void stacktraver(bNode* parentNode);
 
 
@@ -70,7 +70,7 @@ int main(void) {
 	return 0;
 }
 
-//Å¥¿¡ Æ®¸® ÁÖ¼Ò°ª(µ¥ÀÌÅÍ) ÀúÀå
+//íì— íŠ¸ë¦¬ ì£¼ì†Œê°’(ë°ì´í„°) ì €ìž¥
 qNode* enqueue(qNode* pRear, bNode* data) {
 	qNode* pTemp = NULL;
 	pTemp = new qNode;
@@ -98,7 +98,7 @@ qNode* peek(qNode* pFront) {
 	return pNode;
 }
 
-//Æ®¸®ÀÇ ÅõÆ® ³ëµå¸¦ ¸¸µé¾îÁÖ´Â ÇÔ¼ö
+//íŠ¸ë¦¬ì˜ íˆ¬íŠ¸ ë…¸ë“œë¥¼ ë§Œë“¤ì–´ì£¼ëŠ” í•¨ìˆ˜
 bNode* addRoot(int data) {
 	bNode* pTemp = NULL;
 	pTemp = new bNode;
@@ -119,12 +119,12 @@ void addTree(qNode*& pFront, qNode*& pRear, int data) {
 		pRear = enqueue(pRear, pTemp);
 	}
 
-	if (!(pNode->nodeData->pLeft)) { //¿Þ ÂÊÀÌ ºó °æ¿ì
-		pNode->nodeData->pLeft = pTemp; //¿ÞÂÊ¿¡ ³ëµå¸¦ Ãß°¡
-		pTemp->pRenode = pNode->nodeData;	//Ãß°¡ÇÑ ³ëµåÀÇ ÀÌÀü ºÎ¸ð ³ëµå·Î queue¿¡ ÀúÀåµÇ¾î ÀÖ´Â ÃÖ»óÀ§ ³ëµåÀÇ µ¥ÀÌÅÍ °ªÀÇ ÁÖ¼Ò¸¦ ³Ö´Â´Ù.
-		check_heap(pTemp); //ºÎ¸ð¿Í ÀÚ½ÄÀÇ °ªÀ» ºñ±³ÇØ Å« °ªÀ» ¾Æ·¡·Î ³»¸°´Ù.
+	if (!(pNode->nodeData->pLeft)) { //ì™¼ ìª½ì´ ë¹ˆ ê²½ìš°
+		pNode->nodeData->pLeft = pTemp; //ì™¼ìª½ì— ë…¸ë“œë¥¼ ì¶”ê°€
+		pTemp->pRenode = pNode->nodeData;	//ì¶”ê°€í•œ ë…¸ë“œì˜ ì´ì „ ë¶€ëª¨ ë…¸ë“œë¡œ queueì— ì €ìž¥ë˜ì–´ ìžˆëŠ” ìµœìƒìœ„ ë…¸ë“œì˜ ë°ì´í„° ê°’ì˜ ì£¼ì†Œë¥¼ ë„£ëŠ”ë‹¤.
+		check_heap(pTemp); //ë¶€ëª¨ì™€ ìžì‹ì˜ ê°’ì„ ë¹„êµí•´ í° ê°’ì„ ì•„ëž˜ë¡œ ë‚´ë¦°ë‹¤.
 	}
-	else if (!(pNode->nodeData->pRight)) { //¿À¸¥ÂÊÀÌ ºó °æ¿ì
+	else if (!(pNode->nodeData->pRight)) { //ì˜¤ë¥¸ìª½ì´ ë¹ˆ ê²½ìš°
 		pNode->nodeData->pRight = pTemp;
 		pTemp->pRenode = pNode->nodeData;
 		check_heap(pTemp);
@@ -170,7 +170,7 @@ void traversals(bNode * parentNode) {
 
 }
 
-//½ºÅÃ °ü·Ã ÇÔ¼ö
+//ìŠ¤íƒ ê´€ë ¨ í•¨ìˆ˜
 void push(sNode*& pFront, bNode* data) {
 	sNode* pTemp = NULL;
 	if (data) {
@@ -222,7 +222,7 @@ void stacktraver(bNode* parentNode) {
 void check_heap(bNode* pNode) {
 	bNode* pParent = pNode->pRenode;
 
-	while (pParent->data > pNode->data) //ºÎÈ£¸¦ ¹Ý´ë·Î ÇÏ¸é ÃÖ¼ÒÈü , ÃÖ´ëÈü µÑ´Ù ±¸Çö °¡´É
+	while (pParent->data > pNode->data) //ë¶€í˜¸ë¥¼ ë°˜ëŒ€ë¡œ í•˜ë©´ ìµœì†Œíž™ , ìµœëŒ€íž™ ë‘˜ë‹¤ êµ¬í˜„ ê°€ëŠ¥
 	{
 		int nData = 0;
 
