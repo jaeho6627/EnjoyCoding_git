@@ -67,11 +67,12 @@ enum On_Off { Off=0, On = 1};
 //자동차 
 class Car
 {
-public:
 	//멤버 변수
 	int m_nSpeed;
 	string m_strColor;
 	int m_nGear;
+	
+public:
 	On_Off m_On_Off;
 	
 	//브레이크와 가속은 속도를 확인하기위해 속도를 리턴한다
@@ -141,8 +142,18 @@ public:
 		cout << "Car on-off" << m_On_Off << endl;
 		cout << "###################################" << endl << endl;
 	}
-};
 
+	int Returnspeed()
+	{
+		return m_nSpeed;
+	}
+};
+/*  검색 방법
+1. c++은닉 -> 은닉의 개념에 대한 설명
+2. 내가 은닉하려고 하는 것은 => 속도, c++클래스 멤버 변수
+							=> c++멤버변수 은닉 => private을 사용
+#내가 해야할 것을 전문용어로 구체적으로 표현가능해야한다.
+*/
 void Car_()
 {
 	//클래스를 사용할때 객체(인스턴스)를 생성한다 ( ==클래스를 사용할때 메모리를 생성한다)
@@ -168,14 +179,14 @@ void Car_()
 			cCar.Accel();
 		else if (nUserinput == 2)	//브레이크를 밟으면 속도가 1씩 감소
 			cCar.Break();
-		else if (cCar.m_nSpeed > 0 && nUserinput == 0)	//스피드가 1이상인 경우 주차할경우 불가능
+		else if (cCar.Returnspeed() > 0 && nUserinput == 0)	//스피드가 1이상인 경우 주차할경우 불가능
 			cout << "I can't stop now!!" << endl;
 		else
 		{		// 위 조건을 모두 만족하지 않으면 주차 시동 끔
 			cInput = 0;
 			cCar.m_On_Off = Off; //시동 종료
 		}
-		cout << "drive speed : " << cCar.m_nSpeed << endl;
+		cout << "drive speed : " << cCar.Returnspeed() << endl;
 	}
 	
 	cCar.CarState();
