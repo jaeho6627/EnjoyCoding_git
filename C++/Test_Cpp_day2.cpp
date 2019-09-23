@@ -71,8 +71,8 @@ class Car
 	int m_nSpeed;
 	string m_strColor;
 	int m_nGear;
-	
-public:
+	//객체 지향에서 은닉한 data에 잘못된 접근을 막는 용도
+public: //접근 제한자(제어자) . public, private , protected
 	On_Off m_On_Off;
 	
 	//브레이크와 가속은 속도를 확인하기위해 속도를 리턴한다
@@ -90,13 +90,37 @@ public:
 	//호출하지 않아도 객체생성시 호출됨
 	//반환값이 없고, 클래스 이름과 동일하다
 
-	Car() //생성자 : 객체가 생성될때 실행하는 함수 ( 객체 생성시 자동으로 호출되는 '함수')
+	//Car() //생성자 : 객체가 생성될때 실행하는 함수 ( 객체 생성시 자동으로 호출되는 '함수')
+	//{//기본 생성자
+	//	cout << "Gear & Speed : RESET" << endl;
+	//	m_nGear = 0;
+	//	m_nSpeed = 0;
+	//	m_On_Off = Off;
+	//	m_strColor = choiceColor();
+	//}
+	//Car(string color) //오버로딩 가능
+	//{
+	//	cout << "Gear & Speed : RESET" << endl;
+	//	m_nGear = 0;
+	//	m_nSpeed = 0;
+	//	m_On_Off = Off;
+	//	m_strColor = color;
+	//}
+	Car(string color = "gray", int speed = 0, int gear = 0, On_Off staus = Off) //디폴트 생성자로 모두 대처가 가능하다
 	{
 		cout << "Gear & Speed : RESET" << endl;
-		m_nGear = 0;
-		m_nSpeed = 0;
-		m_On_Off = Off;
+		m_nGear = speed;
+		m_nSpeed = gear;
+		m_On_Off = staus;
+		m_strColor = color;
 	}
+	/*
+<c++ setter getter>
+setter : 은닉된 멤버변수의 값을 설정하는 것
+getter : 은닉된 멤버변수의 값을 가져오는 것
+public이어야 함
+*/
+
 	int Accel()
 	{
 		if (!(m_nSpeed % 2))
@@ -109,31 +133,8 @@ public:
 			m_nGear--;
 		return --m_nSpeed;				
 	}
-	void choiceColor(void)
-	{
-		int colorcode = 0;
-		cout << "Choice Color [ 1 = RED, 2 = Blue, 3 = Yello, 4 = Black, 5 = Wight ]" << endl;
-		cin >> colorcode;
-
-		switch (colorcode)
-		{
-		case RED:
-			m_strColor = "RED";
-			break;
-		case Blue:
-			m_strColor = "BLUE";
-			break;
-		case Yello:
-			m_strColor = "YELLO";
-			break;
-		case Black:
-			m_strColor = "BLACK";
-			break;
-		case Wight:
-			m_strColor = "WIGHT";
-			break;
-		};
-	}
+	//setter 함수
+	
 	void CarState(void)
 	{
 		cout << "###################################" << endl;
@@ -142,7 +143,7 @@ public:
 		cout << "Car on-off" << m_On_Off << endl;
 		cout << "###################################" << endl << endl;
 	}
-
+	//getter 함수
 	int Returnspeed()
 	{
 		return m_nSpeed;
@@ -154,13 +155,34 @@ public:
 							=> c++멤버변수 은닉 => private을 사용
 #내가 해야할 것을 전문용어로 구체적으로 표현가능해야한다.
 */
+string choiceColor(void)
+{
+	int colorcode = 0;
+	cout << "Choice Color [ 1 = RED, 2 = Blue, 3 = Yello, 4 = Black, 5 = Wight ]" << endl;
+	cin >> colorcode;
+
+	switch (colorcode)
+	{
+	case RED:
+		return "RED";
+	case Blue:
+		return "BLUE";
+	case Yello:
+		return "YELLO";
+	case Black:
+		return "BLACK";
+	case Wight:
+		return "WIGHT";
+	};
+}
 void Car_()
 {
 	//클래스를 사용할때 객체(인스턴스)를 생성한다 ( ==클래스를 사용할때 메모리를 생성한다)
-	Car cCar;
+	Car cCar(choiceColor());
+	//Car cCar();
 	char cInput = 0;
 	int nUserinput = 0;
-	cCar.choiceColor();
+	
 
 	cout << "Do you ride a car? " << "1 = YES, 0 = NO" << endl;
 	cin >> cInput;
@@ -171,9 +193,9 @@ void Car_()
 	{
 		// 운전 중에는 시동 유지
 		cCar.CarState();	//속도판 확인
-		cout << "witch do you want - 1 = Accel, 2 = Break, 0 = Packing" << endl;	//탑승자 선택
-		cin >> nUserinput;
-		cout << endl;
+			cout << "witch do you want - 1 = Accel, 2 = Break, 0 = Packing" << endl;	//탑승자 선택
+			cin >> nUserinput;
+			cout << endl;
 
 		if (nUserinput == 1) //엑셀을 밟으면 속도가 1씩 증가
 			cCar.Accel();
@@ -207,3 +229,8 @@ int main(void) {
 	Car_();
 	return 0;
 }
+
+/*
+캡슐화 : 나타낼 대상의 속성과 동작을 변수와 함수로 묶어서 클래스로 표현
+은닉 : 나타낼 대상의 접근을 제한되어야 할 경우 사용
+*/
