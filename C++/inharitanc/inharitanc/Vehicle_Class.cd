@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Vehicle">
+    <Position X="6.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAABAAAAAEEEAAABAEAIAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Vehicle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bick">
+    <Position X="3.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Vehicle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine">
+    <Position X="5.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAEAAAAAAAAAAAAABQABAAAAAAAAAA=</HashCode>
+      <FileName>Vehicle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Truck">
+    <Position X="4" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="Engine" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="5.625" Y="6.261" />
+        <Point X="5.625" Y="6.51" />
+        <Point X="4.75" Y="6.51" />
+        <Point X="4.75" Y="6.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAACEAAAQAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Vehicle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MotaCycle">
+    <Position X="7.75" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="Engine" FixedFromPoint="true">
+      <Path>
+        <Point X="6.625" Y="6.261" />
+        <Point X="6.625" Y="6.511" />
+        <Point X="8.5" Y="6.511" />
+        <Point X="8.5" Y="6.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAACAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Vehicle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
