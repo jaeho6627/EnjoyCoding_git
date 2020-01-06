@@ -64,6 +64,10 @@ namespace Custom
 			}*/
 			memcpy(m_strString, str, len+1);
 		}
+		int size(void)
+		{
+			return len;
+		}
 
 		//복사 생성자 : 객체가 복사될때 불리는 함수
 		//생성자와 같고 매개변수가 자기자신의 참조자를 받는다.
@@ -131,6 +135,27 @@ namespace Custom
 				return false;
 		}
 
+		string operator = (string& str) //문자열 복사 연산자
+		{
+			delete[] m_strString;
+			int size = strlen(str.c_str());
+			m_strString = new char[size + 1];
+			strcpy(m_strString, str.c_str());
+			return *this;
+		}
+		char* operator[] (int i)
+		{
+			return *(this)->m_strString[i];
+		}
+
+		char* operator+(string& str)
+		{
+			char* ReturnC = NULL;
+			ReturnC = new char[this->len + str.len - 1];
+			strcpy(ReturnC, this->m_strString);
+			strcpy(ReturnC[this->len - 1], str.m_strString);
+
+		}
 		//참조 교환과 값의 교환을 테스트하고, 테스트한 결과가 왜 적용되지 않는지 설명하기, 설명시 설명한 것에 해당하는 용어에 대해 정리하기
 	};
 
@@ -152,6 +177,13 @@ namespace Custom
 		{
 			cout << "!=" << endl;
 		}
+		cout << "end" << endl;
+		strA = strB;
+		cout << strA.c_str() << endl;
+		cout << strB.c_str() << endl;
+		for (int i = 0; i < strB.size(); i++)
+			cout << strA[i];
+		cout << strB + strA << endl;
 	}
 }
 
