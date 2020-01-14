@@ -10,7 +10,7 @@ namespace PoketMonsterGame
     class PoketMonGame
     {
         private GM GameManager = new GM();
-        private User Player = new User();
+        private User Player = new User(true);
 
         public void PoketMon()
         {
@@ -39,9 +39,10 @@ namespace PoketMonsterGame
                         ChoiceDon(ref Player, ref GameManager);
                         break;
                     case '2':
-                        //Hospital(ref Player);
+                        Hospital(ref Player);
                         break;
                     case '3': //상점
+                        Shop(ref Player, ref GameManager);
                         break;
                     case '4': //훈련장
                         Training(ref Player, ref GameManager);
@@ -123,7 +124,7 @@ namespace PoketMonsterGame
             Player.Show_UseMon();
             while (true)
             {
-                Console.Write("[행동을 선택해주세요.]\n[1. 공격 2. 막기 3. 몬스터 변경 4. 도망]\n유저 : ");
+                Console.Write("[행동을 선택해주세요.]\n[1. 공격 2. 막기 3. 아이템 사용 4. 몬스터 변경 5. 도망]\n유저 : ");
                 Player.Set_Key();
 
                 if (Player.Get_Key() == '1')
@@ -143,8 +144,21 @@ namespace PoketMonsterGame
                 }
                 else if (Player.Get_Key() == '3')
                 {
-                    Console.WriteLine("[몬스터를 변경합니다.]");
-                    //몬스터 변경 함수 ( HP를 확인하고 0과 같은 경우 변경이 불가능 하도록 )
+                    Console.WriteLine("[아이템을 사용합니다.]");
+                    
+                    if(Player.UseItem_Show())
+                    {
+                        Console.WriteLine("[사용할 아이템을 선택해주세요.]");
+                        Player.Set_Key();
+                        Player.Item_Use(ref GameManager, ref Player, Mon);
+                    }
+                }
+                else if(Player.Get_Key() == '4')
+                {
+                    Player.MonShow();
+                    Console.Write("[사용하실 포켓몬을 선택해주세요.]\n유저 : ");
+                    Player.Set_Key();
+                    Player.UseMon_change();
                 }
                 else
                 {
@@ -155,7 +169,7 @@ namespace PoketMonsterGame
                 if (Mon.GetHP() <= 0)
                 {
                     Console.WriteLine("[상대몬스터를 처치하는데 성공했습니다.]\n");
-                    GetOtherMon(Mon, ref Player);
+                    GameManager.Give_Price(ref Player);
                     Player.BattleEnd();
                     break;
                 }
@@ -185,29 +199,16 @@ namespace PoketMonsterGame
                     }
                     else
                     {
-                        Console.Write("[사용할 몬스터를 선택해주세요.]\n유저 : ");
-                        //몬스터 변경 함수
+                        Player.MonShow();
+                        Console.Write("[사용하실 포켓몬을 선택해주세요.]\n유저 : ");
+                        Player.Set_Key();
+                        Player.UseMon_change();
                     }
                 }
                 GameManager.BattleResult(ref Player, ref Mon);
             }
         }
-        static void GetOtherMon(Monster OtherMon, ref User Player)
-        {
-            Console.Write("[처치한 몬스터를 잡으시겠습니까?]\n[소지하고 있는 몬스터 볼 : {0}]\n[1. 예 2. 아니오]", Player.Get_MonsterBall());
-            Player.Set_Key();
-            if (Player.Get_Key() == '1'&&Player.Get_MonsterBall()>0)
-            {
-                Player.Set_MonsterBall(Player.Get_MonsterBall() - 1);
-                Player.GetOtherMon(OtherMon);
-                Console.WriteLine("[몬스터를 잡는데 성공했습니다.]");
-                Player.MonShow();
-            }
-            else if(Player.Get_MonsterBall() <= 0)
-            {
-                Console.WriteLine("[몬스터 볼이 없어 잡을 수 없습니다.]");
-            }
-        }
+        
         static void Training(ref User Player, ref GM GameManager)
         {
             Console.Write("[훈련장에 입장했습니다.]\n[원하시는 스킬을 몬스터에게 학습시키거나 잊게 만들 수 있습니다.]\n");
@@ -240,23 +241,27 @@ namespace PoketMonsterGame
             
         }
 
-        //static void Hospital(ref User Player)
-        //{
-        //    Console.Write("[병원에 입장하셨습니다.]\n[소지하고 계신 몬스터는 다음과 같습니다.]");
-        //    do
-        //    {
-        //        Player.MonShow();
-        //        Console.WriteLine();
-        //        Console.WriteLine();
+        static void Shop(ref User Player, ref GM GameManager)
+        {
+            Console.Write($"[상점에 입장하셨습니다.]\n[원하는 아이템을 구매하실 수 있습니다.]\n[현재 소지하고 있는 골드는 '{Player.Get_Gold()}'입니다.]\n[구입할 아이템을 선택해주세요]\n");
+            GameManager.Show_Shop();
+            Console.Write("유저 : ");
+            Player.Set_Key();
+            GameManager.Get_ShopItem(ref Player);
+        }
+        static void Hospital(ref User Player)
+        {
+            Console.Write("[병원에 입장하셨습니다.]\n[소지하고 계신 몬스터는 다음과 같습니다.]\n");
+            Player.MonShow();
+            Console.WriteLine();
+            Console.WriteLine();
 
-        //        Console.Write("[1. 치료한다 2. 다시 확인한다 3. 돌아간다]\n유저 : ");
-        //        Player.Set_Key();
-        //        if (Player.Get_Key() == '1')
-        //            MonHill(ref Player);
-
-        //    } while (Player.Get_Key() == '2');
-        //    Console.WriteLine("[마을로 이동합니다.]");
-        //    Console.WriteLine();
-        //}
+            Console.Write("[1. 치료한다 2. 다시 확인한다 3. 돌아간다]\n유저 : ");
+            Player.Set_Key();
+            if (Player.Get_Key() == '1')
+                Player.AllMonHill();
+            Console.WriteLine("[치료가 완료되었습니다.]\n[마을로 이동합니다.]");
+            Console.WriteLine();
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace PoketMonsterGame
             init_MonGrass();
             init_MonMount();
             init_MonRiver();
+            init_Item();
         }
 
         private void init_MonGrass()
@@ -56,6 +57,13 @@ namespace PoketMonsterGame
             lm_Skill.Add(new Skill("백만 볼트", 4, 3));
         }
 
+        private void init_Item()
+        {
+            lm_ITEM = new List<Item>();
+            lm_ITEM.Add(new Item("몬스터 볼", 0, 200));
+            lm_ITEM.Add(new Item("상처약", 0, 100));
+        }
+
         public void ShowMonsterList()
         {
             for (int i = 0; i < GrassMon.Count(); i++)
@@ -80,8 +88,8 @@ namespace PoketMonsterGame
 
 
             if (area == "Grass") Mon = new Monster(GrassMon[RandMon]);
-            else if (area == "Mount") new Monster(MountMon[RandMon]);
-            else new Monster(RiverMon[RandMon]);
+            else if (area == "Mount") Mon = new Monster(MountMon[RandMon]);
+            else Mon = new Monster(RiverMon[RandMon]);
         }
         public void BattleResult(ref User Player, ref Monster OtherMon)
         {
@@ -127,6 +135,38 @@ namespace PoketMonsterGame
             Console.WriteLine();
             Console.WriteLine("#################################");
             Console.WriteLine();
+        }
+
+        public void Give_Price(ref User Player)
+        {
+            Console.WriteLine("[전투 보상으로 '100'원을 획득하셨습니다.]");
+            Player.Set_Gold(Player.Get_Gold() + 100);
+        }
+
+        public void Show_Shop()
+        {
+            Console.WriteLine("#################################");
+            for (int i = 0; i<lm_ITEM.Count(); i++)
+            {
+                Console.Write($"{i + 1}. {lm_ITEM[i].Get_Name()} : {lm_ITEM[i].Get_Price()}\n");
+            }
+            Console.WriteLine("#################################");
+        }
+        public void Get_ShopItem(ref User Player)
+        {
+            if (Player.Get_Key()<'3')
+            {
+                if (Player.Get_Gold() >= lm_ITEM[Player.Get_Key() - 49].Get_Price())
+                {
+                    Player.Set_Gold(Player.Get_Gold() - lm_ITEM[Player.Get_Key() - 49].Get_Price());
+                    Console.Write($"['{lm_ITEM[Player.Get_Key() - 49].Get_Name()}'을 구매 하였습니다.]\n");
+                    Player.Add_Item(lm_ITEM[Player.Get_Key() - 49]);
+                }
+                else
+                {
+                    Console.Write($"[골드가 부족해 아이템을 구매하지 못하였습니다.]\n");
+                }
+            }
         }
         //static void MonHill(ref User Player)
         //{

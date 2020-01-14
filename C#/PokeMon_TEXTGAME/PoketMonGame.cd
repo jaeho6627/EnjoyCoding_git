@@ -1,44 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="PoketMonsterGame.Item">
-    <Position X="4.75" Y="1.75" Width="1.5" />
+  <Class Name="PoketMonsterGame.GM" Collapsed="true">
+    <Position X="4.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>wAAADAJAAQCIAAEwACAAggAAAIAAAAABAAIIAAAAAAA=</HashCode>
+      <FileName>GM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PoketMonsterGame.Item" Collapsed="true">
+    <Position X="6.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAIQAAAAAAgAgAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>Item.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PoketMonsterGame.Monster">
-    <Position X="8.25" Y="1.25" Width="1.5" />
+  <Class Name="PoketMonsterGame.Monster" Collapsed="true">
+    <Position X="8.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAAAAAAEAAgAAAAAAEAQAQQAAJQAAABAA=</HashCode>
+      <HashCode>BAAAAAABAAAAAAAAAEIAgAQAAAAEAQARQAAJQAAABAA=</HashCode>
       <FileName>Monster.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PoketMonsterGame.PoketMonGame">
-    <Position X="2.5" Y="1.75" Width="1.5" />
+  <Class Name="PoketMonsterGame.PoketMonGame" Collapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIIAAAAAAAAAAAAAAgABAAAAAAAAAAAAAAACAQBAAAA=</HashCode>
+      <HashCode>gAIAAAAAAAAAAAAAAgABAAAAEACAAAAAAAACAQBAAAA=</HashCode>
       <FileName>PoketMonGame.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PoketMonsterGame.Program">
-    <Position X="2.5" Y="0.5" Width="1.5" />
+  <Class Name="PoketMonsterGame.Program" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PoketMonsterGame.Skill">
-    <Position X="6.25" Y="1.75" Width="1.5" />
+  <Class Name="PoketMonsterGame.Skill" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAEAAIAABIAAAAAEBAAAAIAAA=</HashCode>
+      <HashCode>AAAEAAAAAAAAgAAAgAAAEAAIAABIAAAAAEBCIAAIAAA=</HashCode>
       <FileName>Skill.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PoketMonsterGame.User">
-    <Position X="10.25" Y="0.5" Width="1.5" />
+  <Class Name="PoketMonsterGame.User" Collapsed="true">
+    <Position X="4.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QIACJAAACQAAMAQAlAoEIoAAAAAACAAGIAFAAgAEACE=</HashCode>
+      <HashCode>QIACJAAACQAAMJQAlAgEAoAEECABDKEGIAFAAwAEECE=</HashCode>
       <FileName>User.cs</FileName>
     </TypeIdentifier>
   </Class>

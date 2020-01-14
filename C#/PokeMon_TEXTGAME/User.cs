@@ -13,19 +13,25 @@ namespace PoketMonsterGame
         private List<Monster> HaveMonster;
         private List<Item> HaveItem;
         private Monster UseMon;
-        private int MonsterBall = 0;
         private char Key = (char)0;
+        private int Gold = 0;
         bool shilde = true;
         int MonIndex = 0;
 
         public User()
         {
             HaveMonster = new List<Monster>();
+            HaveItem = new List<Item>();
             UseMon = null;
-            MonsterBall = 3;
         }
-        
-        
+        public User(bool n)
+        {
+            HaveMonster = new List<Monster>();
+            HaveItem = new List<Item>();
+            HaveItem.Add(new Item("몬스터 볼", 1, 200));
+            UseMon = null;
+        }
+
         public bool Get_Shilde()
         {
             return shilde;
@@ -38,24 +44,15 @@ namespace PoketMonsterGame
         {
             return Key;
         }
-        public int Get_MonsterBall()    //유저가 가지고 있는 몬스터 볼을 반환
-        {
-            return MonsterBall;
-        }
-        public void GetOtherMon(Monster OtherMonster)   //다른 몬스터를 잡음
-        {
-            HaveMonster.Add(new Monster(OtherMonster));
-        }
         public string Get_HaveMonName(int index)
         {
             return HaveMonster[index].GetName();
         }
-        //######################################################################
-
-        public void Set_MonsterBall(int nBall) //몬스터 볼을 저장
+        public void GetOtherMon(Monster Other)
         {
-            MonsterBall = nBall;
+            HaveMonster.Add(new Monster(Other));
         }
+        //######################################################################
         public void Set_Key()   //유저의 키입력을 받음
         {
             Key = (char)Console.Read();
@@ -102,10 +99,6 @@ namespace PoketMonsterGame
             {
                 UseMon = HaveMonster[0];
             }
-        }
-        public void ChoiceMon(int index)
-        {
-
         }
         public string Get_UseMonName()
         {
@@ -179,6 +172,111 @@ namespace PoketMonsterGame
             for(int i = 0; i<HaveMonster.Count(); i++)
             {
                 HaveMonster[i].SkillNameShow();
+            }
+        }
+        public void Set_Gold(int _Gold)
+        {
+            Gold = _Gold;
+        }
+        public int Get_Gold()
+        {
+            return Gold;
+        }
+
+        public void Add_Item(Item temp)
+        {
+            for (int i = 0; i < HaveItem.Count(); i++)
+            {
+                if (HaveItem[i].Get_Name() == temp.Get_Name())
+                {
+                    HaveItem[i].Up_count();
+                }
+            }
+            if(Serch_Item(temp))
+            {
+                temp.Up_count();
+                HaveItem.Add(temp);
+            }
+                
+        }
+        public bool UseItem_Show()
+        {
+            if(HaveItem.Count() == 0)
+            {
+                Console.WriteLine("[사용할 수 있는 아이템이 없습니다.]");
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("#################################");
+                for (int i = 0; i < HaveItem.Count(); i++)
+                {
+                    Console.Write($"{i + 1}. {HaveItem[i].Get_Name()} : {HaveItem[i].Get_Count()}\n");
+                }
+                Console.WriteLine("#################################");
+                return true;
+            }
+        }
+
+        public bool Serch_Item(Item temp)
+        {
+            for (int i = 0; i < HaveItem.Count(); i++)
+            {
+                if (HaveItem[i].Get_Name() == temp.Get_Name())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        public void Item_Use(ref GM GameManager, ref User Player, Monster Other)
+        {
+            if(HaveItem[Key - 49].Get_Name() == "몬스터 볼" && HaveItem[Key - 49].Get_Count()>0)
+            {
+                if (Other.GetHP() <= 30)
+                {
+                    HaveMonster.Add(new Monster(Other));
+                    Console.WriteLine("[몬스터를 잡는데 성공했습니다.]");
+                    Player.MonShow();
+                    Other.SetHp(0);
+                }
+                else
+                    Console.WriteLine("[몬스터를 잡는데 실패 했습니다.]");
+                HaveItem[Key - 49].Down_count();
+            }
+            else if(HaveItem[Key - 49].Get_Name() == "상처약" && HaveItem[Key - 49].Get_Count() > 0)
+            {
+                if(UseMon.GetHP()<100)
+                {
+                    HaveItem[Key - 49].Down_count();
+                    UseMon.SetHp(100);
+                }
+                else
+                {
+                    Console.WriteLine("[이미 체력이 최대치입니다.]");
+                }
+            }
+        }
+
+        public void UseMon_change()
+        {
+            if(HaveMonster[Key-49].GetHP() > 0)
+            {
+                UseMon = HaveMonster[Key - 49];
+                Console.WriteLine("[몬스터가 변경되었습니다.]");
+            }
+            else
+            {
+                Console.WriteLine("[선택하신 몬스터는 체력이 없어 출전할 수 없습니다.]");
+            }
+        }
+
+        public void AllMonHill()
+        {
+            for(int i = 0; i<HaveMonster.Count(); i++)
+            {
+                HaveMonster[i].SetHp(100);
             }
         }
     }
